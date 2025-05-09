@@ -12,7 +12,6 @@ import path from "path";
 enum Color {
   RED = "RED",
   GREEN = "GREEN",
-  BLUE = "BLUE",
 }
 
 @Entity()
@@ -56,7 +55,9 @@ test("create migration", async () => {
   // this should create a migration file because
   // the enum in code is { RED, GREEN } and the enum
   // in the snapshot is { RED, GREEN, BLUE }
-  await orm.migrator.createMigration();
+  const migration = await orm.migrator.createMigration();
+
+  console.log(JSON.stringify(migration, null, 2));
 
   expect(await getNumberOfMigrations()).toBe(2);
 });
